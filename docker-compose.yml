@@ -1,0 +1,20 @@
+services:
+  new-api-status:
+    build: .
+    container_name: new-api-status
+    restart: unless-stopped
+    ports:
+      - "8787:8787"
+    environment:
+      - SQL_DSN=postgresql://root:123456@postgres:5432/new-api?sslmode=disable
+      - DB_DRIVER=postgres
+      - POLL_INTERVAL=30
+      # - TURNSTILE_SITE_KEY=
+      # - TURNSTILE_SECRET_KEY=
+    networks:
+      - newapi-net
+
+networks:
+  newapi-net:
+    external: true
+    name: new-api_new-api-network

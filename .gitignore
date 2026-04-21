@@ -1,0 +1,5 @@
+new-api-status
+*.exe
+*.db
+data/
+.env
