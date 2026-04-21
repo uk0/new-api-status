@@ -4,8 +4,6 @@ Lightweight, read-only status page for [new-api](https://github.com/QuantumNous/
 
 **Zero writes to the database. Zero impact on new-api performance.**
 
-![status](.github/preview.png)
-
 ## Features
 
 - Per-group request availability (last 60 min)
