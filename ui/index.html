@@ -10,115 +10,117 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
       background: linear-gradient(135deg, #f9fafb, #f3f4f6);
-      padding: 24px 16px;
+      padding: 32px 16px;
     }
     @media (prefers-color-scheme: dark) {
-      body { background: linear-gradient(135deg, #111827, #030712); color: #f9fafb; }
+      body { background: linear-gradient(135deg, #0f172a, #020617); color: #f1f5f9; }
     }
-    .wrap { max-width: 1200px; margin: 0 auto; }
+    .wrap { max-width: 800px; margin: 0 auto; }
     .center { text-align: center; }
-    h1 { font-size: 24px; font-weight: 700; color: #111827; }
-    .sub { font-size: 14px; color: #6b7280; margin-top: 4px; }
-    @media (prefers-color-scheme: dark) {
-      h1 { color: #f9fafb; }
-      .sub { color: #9ca3af; }
-    }
+    h1 { font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.3px; }
+    .sub { font-size: 13px; color: #94a3b8; margin-top: 6px; }
+    @media (prefers-color-scheme: dark) { h1 { color: #f1f5f9; } }
+
     .card {
-      background: #fff; border-radius: 16px;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); padding: 24px;
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.04);
+      padding: 20px 24px; margin-bottom: 16px;
     }
-    @media (prefers-color-scheme: dark) { .card { background: #1f2937; } }
+    @media (prefers-color-scheme: dark) {
+      .card { background: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 6px 16px rgba(0,0,0,0.15); }
+    }
+
     .section-header {
       display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
     }
-    .section-title { font-size: 14px; font-weight: 600; color: #111827; }
-    .section-hint { font-size: 12px; color: #6b7280; }
-    @media (prefers-color-scheme: dark) {
-      .section-title { color: #f9fafb; }
-      .section-hint { color: #9ca3af; }
-    }
-    .group-card { max-width: 720px; margin: 0 auto 16px; }
-    .channel-grid {
-      display: grid; gap: 12px; max-width: 1200px; margin: 0 auto;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    }
-    .channel-grid[data-count="1"] { max-width: 480px; grid-template-columns: 1fr; }
-    .channel-grid[data-count="2"] { max-width: 760px; grid-template-columns: repeat(2, 1fr); }
-    @media (max-width: 768px) {
-      .channel-grid, .channel-grid[data-count="2"] {
-        grid-template-columns: 1fr; max-width: 100%;
-      }
-    }
-    .ch-card { cursor: pointer; user-select: none; padding: 16px !important; transition: box-shadow 0.2s, transform 0.15s; }
-    .ch-card:hover { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); transform: translateY(-1px); }
-    .bar-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
+    .section-hint { font-size: 11px; color: #94a3b8; }
+    @media (prefers-color-scheme: dark) { .section-title { color: #cbd5e1; } }
+
+    /* Status bars */
+    .status-item { margin-bottom: 14px; }
+    .status-item:last-child { margin-bottom: 0; }
+    .bar-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
     .bar-label { display: flex; align-items: center; gap: 6px; }
-    .bar-label-text { font-size: 12px; font-weight: 600; color: #374151; }
-    .bar-rate { font-size: 12px; color: #9ca3af; }
-    .bar-count { font-size: 12px; color: #9ca3af; }
-    @media (prefers-color-scheme: dark) { .bar-label-text { color: #d1d5db; } }
-    .bars { display: flex; gap: 2px; height: 20px; align-items: flex-end; }
-    .bar {
-      flex: 1; border-radius: 2px; min-width: 2px; transition: background-color 0.2s;
+    .bar-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .bar-label-text { font-size: 13px; font-weight: 500; color: #334155; }
+    .bar-rate { font-size: 12px; color: #94a3b8; font-variant-numeric: tabular-nums; }
+    .bar-count { font-size: 11px; color: #94a3b8; font-variant-numeric: tabular-nums; }
+    @media (prefers-color-scheme: dark) { .bar-label-text { color: #e2e8f0; } }
+
+    .bars { display: flex; gap: 1.5px; height: 24px; align-items: flex-end; }
+    .bar { flex: 1; border-radius: 2px; min-width: 2px; transition: background-color 0.2s; }
+    .no-bar { background: #e2e8f0; }
+    @media (prefers-color-scheme: dark) { .no-bar { background: #334155; } }
+
+    /* Channel items inside card */
+    .ch-item {
+      padding: 14px 16px; border-radius: 10px; cursor: pointer; user-select: none;
+      transition: background 0.15s;
+      background: #f8fafc; border: 1px solid #f1f5f9;
     }
-    .ch-header { display: flex; align-items: center; justify-content: space-between; }
-    .ch-name { font-size: 13px; font-weight: 600; color: #111827; }
-    .ch-meta { font-size: 11px; color: #6b7280; margin-top: 6px; }
-    .ch-arrow { font-size: 12px; color: #6b7280; transition: transform 0.2s; display: inline-block; }
-    .ch-arrow.open { transform: rotate(180deg); }
-    .models { margin-top: 12px; display: flex; flex-direction: column; gap: 12px; }
+    .ch-item:hover { background: #f1f5f9; }
     @media (prefers-color-scheme: dark) {
-      .ch-name { color: #f9fafb; }
-      .ch-meta { color: #9ca3af; }
+      .ch-item { background: #0f172a; border-color: #334155; }
+      .ch-item:hover { background: #1a2744; }
     }
-    .footer { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 16px; }
-    @media (prefers-color-scheme: dark) { .footer { color: #4b5563; } }
+    .ch-grid {
+      display: grid; gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    .ch-grid[data-count="1"] { grid-template-columns: 1fr; }
+    @media (max-width: 680px) { .ch-grid { grid-template-columns: 1fr; } }
+
+    .ch-header { display: flex; align-items: center; justify-content: space-between; }
+    .ch-name { font-size: 13px; font-weight: 600; color: #1e293b; }
+    .ch-meta { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+    .ch-arrow { font-size: 11px; color: #94a3b8; transition: transform 0.2s; display: inline-block; margin-left: 6px; }
+    .ch-arrow.open { transform: rotate(180deg); }
+    @media (prefers-color-scheme: dark) { .ch-name { color: #f1f5f9; } }
+
+    .models { margin-top: 12px; display: flex; flex-direction: column; gap: 10px;
+      padding-top: 12px; border-top: 1px solid #e2e8f0; }
+    @media (prefers-color-scheme: dark) { .models { border-top-color: #334155; } }
+
+    .footer { text-align: center; font-size: 11px; color: #94a3b8; margin-top: 20px; }
+    @media (prefers-color-scheme: dark) { .footer { color: #475569; } }
     .turnstile-wrap { display: flex; justify-content: center; margin-top: 24px; }
-    .loading { text-align: center; font-size: 14px; color: #6b7280; padding: 40px 0; }
-    .no-bar { background: #e5e7eb; }
-    @media (prefers-color-scheme: dark) { .no-bar { background: #374151; } }
+    .loading { text-align: center; font-size: 14px; color: #94a3b8; padding: 40px 0; }
   </style>
 </head>
 <body>
   <div class="wrap" id="app"></div>
   <script>
     const app = document.getElementById('app');
-    let siteKey = null;
-    let verified = false;
-    let statusData = null;
-    let expanded = {};
+    let siteKey = null, verified = false, statusData = null, expanded = {};
 
-    function rateColor(r) { return r >= 99 ? '#22c55e' : r >= 90 ? '#f59e0b' : '#ef4444'; }
-    function rateIcon(r) { return r >= 99 ? '●' : r >= 90 ? '◐' : '○'; }
+    function rc(r) { return r >= 99 ? '#22c55e' : r >= 90 ? '#f59e0b' : '#ef4444'; }
 
     function renderBars(minutes) {
       const now = Math.floor(Date.now() / 1000);
       const map = new Map((minutes || []).map(m => [m.minuteTs, m]));
-      let html = '<div class="bars">';
+      let h = '<div class="bars">';
       for (let i = 59; i >= 0; i--) {
-        const ts = (Math.floor(now / 60) - i) * 60;
-        const m = map.get(ts);
-        const rate = m ? m.successRate : -1;
-        const total = m ? m.total : 0;
-        const bg = rate < 0 ? '' : (rate >= 99 ? '#22c55e' : rate >= 80 ? '#f59e0b' : '#ef4444');
-        const h = total > 0 ? Math.max(20, Math.min(100, total * 10)) : 30;
-        const cls = rate < 0 ? 'bar no-bar' : 'bar';
-        const title = rate >= 0 ? `${rate.toFixed(0)}% (${total} 请求)` : '无数据';
-        html += `<div class="${cls}" style="${bg ? 'background:'+bg+';' : ''}height:${h}%" title="${title}"></div>`;
+        const ts = (Math.floor(now / 60) - i) * 60, m = map.get(ts);
+        const rate = m ? m.successRate : -1, total = m ? m.total : 0;
+        const bg = rate < 0 ? '' : rc(rate);
+        const ht = total > 0 ? Math.max(20, Math.min(100, total * 10)) : 30;
+        const title = rate >= 0 ? `${rate.toFixed(0)}% (${total} req)` : 'No data';
+        h += `<div class="bar${rate < 0 ? ' no-bar' : ''}" style="${bg ? 'background:'+bg+';' : ''}height:${ht}%" title="${title}"></div>`;
       }
-      return html + '</div>';
+      return h + '</div>';
     }
 
-    function renderStatusBar(label, data) {
-      const r = data.overallRate;
-      return `<div>
+    function renderBar(label, data) {
+      const r = data.overallRate, c = rc(r);
+      return `<div class="status-item">
         <div class="bar-row">
           <div class="bar-label">
-            <span style="color:${rateColor(r)};font-size:14px">${rateIcon(r)}</span>
+            <span class="bar-dot" style="background:${c}"></span>
             <span class="bar-label-text">${label}</span>
             <span class="bar-rate">${r.toFixed(1)}%</span>
           </div>
-          <div class="bar-count">${data.totalSuccess}/${data.totalRequests}</div>
+          <span class="bar-count">${data.totalSuccess}/${data.totalRequests}</span>
         </div>
         ${renderBars(data.minutes)}
       </div>`;
@@ -127,72 +129,59 @@
     function render() {
       if (!verified && siteKey) {
         app.innerHTML = `<div class="center" style="padding-top:20vh">
-          <h1>服务状态</h1><p class="sub" style="margin-bottom:24px">请完成人机验证以查看服务状态</p>
-          <div class="card" style="max-width:512px;margin:0 auto"><div class="turnstile-wrap" id="ts-container"></div></div>
-        </div>`;
+          <h1>Service Status</h1><p class="sub" style="margin-bottom:24px">Please complete verification</p>
+          <div class="card"><div class="turnstile-wrap" id="ts-container"></div></div></div>`;
         if (window.turnstile) mountTurnstile();
         return;
       }
-
       if (!statusData) {
         app.innerHTML = `<div class="center" style="padding-top:10vh">
-          <h1>服务状态</h1><p class="sub">各分组与渠道请求可用性监控</p>
-          <div class="card loading" style="max-width:512px;margin:24px auto">加载中...</div>
-        </div>`;
+          <h1>Service Status</h1><p class="sub">Group & channel availability</p>
+          <div class="card loading" style="margin-top:24px">Loading...</div></div>`;
         return;
       }
 
-      const groups = statusData.groups || {};
-      const channels = statusData.channels || {};
-      const gNames = Object.keys(groups).sort();
-      const cNames = Object.keys(channels).sort();
+      const groups = statusData.groups || {}, channels = statusData.channels || {};
+      const gN = Object.keys(groups).sort(), cN = Object.keys(channels).sort();
+      let html = `<div class="center" style="margin-bottom:24px"><h1>Service Status</h1><p class="sub">Group & channel request availability</p></div>`;
 
-      let html = `<div class="center" style="margin-bottom:24px"><h1>服务状态</h1><p class="sub">各分组与渠道请求可用性监控</p></div>`;
-
-      if (gNames.length === 0 && cNames.length === 0) {
-        html += `<div class="card center" style="max-width:512px;margin:0 auto"><p class="sub">暂无数据</p></div>`;
+      if (!gN.length && !cN.length) {
+        html += `<div class="card center"><p class="sub">No data yet</p></div>`;
       } else {
-        if (gNames.length > 0) {
-          html += `<div class="card group-card"><div class="section-header">
-            <span class="section-title">分组状态</span><span class="section-hint">最近 60 分钟</span>
-          </div><div style="display:flex;flex-direction:column;gap:16px">`;
-          for (const n of gNames) html += renderStatusBar(n, groups[n]);
-          html += `</div></div>`;
+        if (gN.length) {
+          html += `<div class="card"><div class="section-header">
+            <span class="section-title">Groups</span><span class="section-hint">Last 60 min</span>
+          </div>`;
+          for (const n of gN) html += renderBar(n, groups[n]);
+          html += `</div>`;
         }
-        if (cNames.length > 0) {
-          html += `<div style="max-width:1200px;margin:0 auto">
-            <div class="section-header" style="padding:0 4px;margin-bottom:12px">
-              <span class="section-title">渠道状态</span><span class="section-hint">点击展开查看模型详情</span>
-            </div><div class="channel-grid" data-count="${Math.min(cNames.length, 3)}">`;
-          for (const n of cNames) {
-            const ch = channels[n];
-            const r = ch.overallRate;
-            const models = ch.models || {};
-            const mNames = Object.keys(models).sort();
+        if (cN.length) {
+          html += `<div class="card"><div class="section-header">
+            <span class="section-title">Channels</span><span class="section-hint">Click to expand</span>
+          </div><div class="ch-grid" data-count="${Math.min(cN.length, 3)}">`;
+          for (const n of cN) {
+            const ch = channels[n], r = ch.overallRate, c = rc(r);
+            const models = ch.models || {}, mN = Object.keys(models).sort();
             const isOpen = expanded[n];
-            html += `<div class="card ch-card" data-ch="${n}">
+            html += `<div class="ch-item" data-ch="${n}">
               <div class="ch-header">
                 <div class="bar-label">
-                  <span style="color:${rateColor(r)};font-size:16px">${rateIcon(r)}</span>
+                  <span class="bar-dot" style="background:${c}"></span>
                   <span class="ch-name">${n}</span>
                   <span class="bar-rate">${r.toFixed(1)}%</span>
                 </div>
                 <div class="bar-label">
                   <span class="bar-count">${ch.totalSuccess}/${ch.totalRequests}</span>
-                  <span class="ch-arrow${isOpen ? ' open' : ''}">▾</span>
+                  <span class="ch-arrow${isOpen ? ' open' : ''}">&#9662;</span>
                 </div>
               </div>`;
-            if (!isOpen && mNames.length > 0) {
-              html += `<div class="ch-meta">${mNames.length} 个模型</div>`;
-            }
-            if (isOpen) {
-              if (mNames.length > 0) {
-                html += `<div class="models">`;
-                for (const m of mNames) html += renderStatusBar(m, models[m]);
-                html += `</div>`;
-              } else {
-                html += `<div class="ch-meta">暂无模型数据</div>`;
-              }
+            if (!isOpen && mN.length) html += `<div class="ch-meta">${mN.length} models</div>`;
+            if (isOpen && mN.length) {
+              html += `<div class="models">`;
+              for (const m of mN) html += renderBar(m, models[m]);
+              html += `</div>`;
+            } else if (isOpen) {
+              html += `<div class="ch-meta">No model data</div>`;
             }
             html += `</div>`;
           }
@@ -200,19 +189,13 @@
         }
       }
 
-      html += `<div class="footer">每 30 秒自动刷新</div>`;
+      html += `<div class="footer">Auto-refresh every 30s</div>`;
       app.innerHTML = html;
-
-      document.querySelectorAll('.ch-card').forEach(el => {
-        el.addEventListener('click', e => {
-          const ch = el.dataset.ch;
-          expanded[ch] = !expanded[ch];
-          render();
-        });
+      document.querySelectorAll('.ch-item').forEach(el => {
+        el.addEventListener('click', () => { expanded[el.dataset.ch] = !expanded[el.dataset.ch]; render(); });
       });
     }
 
-    // Turnstile
     function mountTurnstile() {
       const c = document.getElementById('ts-container');
       if (!c || !window.turnstile) return;
@@ -226,29 +209,19 @@
     function loadStatus(token) {
       let url = '/api/status';
       if (token) url += '?token=' + encodeURIComponent(token);
-      fetch(url).then(r => r.json()).then(d => {
-        statusData = d;
-        render();
-      }).catch(() => {});
+      fetch(url).then(r => r.json()).then(d => { statusData = d; render(); }).catch(() => {});
     }
 
-    // Init
     fetch('/api/status/config').then(r => r.json()).then(d => {
       siteKey = d.turnstileSiteKey || null;
-      if (!siteKey) {
-        verified = true;
-        loadStatus();
-        setInterval(() => loadStatus(), 30000);
-      } else {
+      if (!siteKey) { verified = true; loadStatus(); }
+      else {
         const s = document.createElement('script');
         s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-        s.async = true;
-        s.onload = () => { render(); };
-        document.head.appendChild(s);
-        render();
+        s.async = true; s.onload = () => render();
+        document.head.appendChild(s); render();
       }
     }).catch(() => { verified = true; loadStatus(); });
-
     setInterval(() => { if (verified) loadStatus(); }, 30000);
   </script>
 </body>
