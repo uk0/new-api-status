@@ -39,11 +39,18 @@
     }
     .group-card { max-width: 720px; margin: 0 auto 16px; }
     .channel-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 12px; max-width: 1200px; margin: 0 auto;
+      display: grid; gap: 12px; max-width: 1200px; margin: 0 auto;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     }
-    .ch-card { cursor: pointer; user-select: none; padding: 16px !important; transition: box-shadow 0.2s; }
-    .ch-card:hover { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); }
+    .channel-grid[data-count="1"] { max-width: 480px; grid-template-columns: 1fr; }
+    .channel-grid[data-count="2"] { max-width: 760px; grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 768px) {
+      .channel-grid, .channel-grid[data-count="2"] {
+        grid-template-columns: 1fr; max-width: 100%;
+      }
+    }
+    .ch-card { cursor: pointer; user-select: none; padding: 16px !important; transition: box-shadow 0.2s, transform 0.15s; }
+    .ch-card:hover { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); transform: translateY(-1px); }
     .bar-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
     .bar-label { display: flex; align-items: center; gap: 6px; }
     .bar-label-text { font-size: 12px; font-weight: 600; color: #374151; }
@@ -156,7 +163,7 @@
           html += `<div style="max-width:1200px;margin:0 auto">
             <div class="section-header" style="padding:0 4px;margin-bottom:12px">
               <span class="section-title">渠道状态</span><span class="section-hint">点击展开查看模型详情</span>
-            </div><div class="channel-grid">`;
+            </div><div class="channel-grid" data-count="${Math.min(cNames.length, 3)}">`;
           for (const n of cNames) {
             const ch = channels[n];
             const r = ch.overallRate;
