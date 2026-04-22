@@ -4,6 +4,8 @@ Lightweight, read-only status page for [new-api](https://github.com/QuantumNous/
 
 **Zero writes to the database. Zero impact on new-api performance.**
 
+![preview](preview.png)
+
 ## Features
 
 - Per-group request availability (last 60 min)
@@ -22,17 +24,11 @@ Assumes new-api is already running with its own `docker-compose.yml` and a Docke
 services:
   new-api-status:
     build: .
-    # or use: image: ghcr.io/uk0/new-api-status:latest
     container_name: new-api-status
     restart: unless-stopped
     ports:
       - "8787:8787"
-    environment:
-      - SQL_DSN=postgresql://root:123456@postgres:5432/new-api?sslmode=disable
-      - DB_DRIVER=postgres
-      - POLL_INTERVAL=30
-      # - TURNSTILE_SITE_KEY=your-site-key
-      # - TURNSTILE_SECRET_KEY=your-secret-key
+    env_file: .env
     networks:
       - newapi-net
 
@@ -45,6 +41,14 @@ networks:
 ```bash
 docker compose up -d
 # open http://localhost:8787
+```
+
+## Configuration
+
+Copy `.env.example` to `.env` and edit:
+
+```bash
+cp .env.example .env
 ```
 
 ## Environment Variables
