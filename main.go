@@ -74,10 +74,17 @@ func detectDriver(dsn string) string {
 	if strings.HasPrefix(dsn, "postgres") {
 		return "postgres"
 	}
-	if strings.Contains(dsn, "@tcp(") {
+	if strings.Contains(dsn, "@tcp(") || strings.HasPrefix(dsn, "mysql://") {
 		return "mysql"
 	}
 	return "sqlite3"
+}
+
+func normalizeDSN(driver, dsn string) string {
+	if driver == "mysql" {
+		dsn = strings.TrimPrefix(dsn, "mysql://")
+	}
+	return dsn
 }
 
 // --- Data types ---
@@ -351,7 +358,7 @@ func main() {
 		log.Fatal("DSN is required. Set SQL_DSN env or use -dsn flag")
 	}
 
-	db, err := sql.Open(cfg.Driver, cfg.DSN)
+	db, err := sql.Open(cfg.Driver, normalizeDSN(cfg.Driver, cfg.DSN))
 	if err != nil {
 		log.Fatalf("failed to open database: %v", err)
 	}

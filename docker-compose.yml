@@ -6,8 +6,12 @@ services:
     ports:
       - "8787:8787"
     environment:
+      # PostgreSQL:
       - SQL_DSN=postgresql://root:123456@postgres:5432/new-api?sslmode=disable
       - DB_DRIVER=postgres
+      # MySQL (uncomment and comment out above):
+      # - SQL_DSN=root:123456@tcp(mysql:3306)/new-api
+      # - DB_DRIVER=mysql
       - POLL_INTERVAL=30
       # - TURNSTILE_SITE_KEY=
       # - TURNSTILE_SECRET_KEY=
