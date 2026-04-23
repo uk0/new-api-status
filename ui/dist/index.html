@@ -108,7 +108,7 @@
       for (let i = 59; i >= 0; i--) {
         const ts = (Math.floor(now / 60) - i) * 60, m = map.get(ts);
         const rate = m ? m.successRate : -1, total = m ? m.total : 0;
-        const bg = rate < 0 ? '#4b5563' : rateToColor(rate);
+        const bg = rate < 0 ? '#22c55e' : rateToColor(rate);
         const ht = total > 0 ? Math.max(20, Math.min(100, total * 10)) : 30;
         const title = rate >= 0 ? `${rate.toFixed(0)}% (${total} req)` : 'No data';
         h += `<div class="bar" style="background:${bg};height:${ht}%" title="${title}"></div>`;
