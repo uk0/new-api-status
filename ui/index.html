@@ -48,8 +48,9 @@
     .bar-count { font-size: 11px; color: #94a3b8; font-variant-numeric: tabular-nums; }
     @media (prefers-color-scheme: dark) { .bar-label-text { color: #e2e8f0; } }
 
-    .bars { display: flex; gap: 2px; height: 24px; align-items: flex-end; }
+    .bars { display: flex; gap: 2px; height: 20px; align-items: flex-end; }
     .bar { flex: 1; border-radius: 2px; min-width: 2px; transition: background-color 0.2s; }
+    @media (prefers-color-scheme: dark) { .bar { opacity: 0.8; } }
 
     /* Channel items inside card */
     .ch-item {
@@ -93,11 +94,9 @@
     let siteKey = null, verified = false, statusData = null, expanded = {};
 
     function rateToColor(rate) {
-      const t = Math.max(0, Math.min(100, rate)) / 100;
-      const r = Math.round(239 - (239 - 34) * t);
-      const g = Math.round(68 + (197 - 68) * t);
-      const b = Math.round(68 + (94 - 68) * t);
-      return `rgb(${r},${g},${b})`;
+      if (rate >= 99) return '#22c55e';
+      if (rate >= 80) return '#f59e0b';
+      return '#ef4444';
     }
     function dotColor(r) { return r >= 99 ? '#22c55e' : r >= 90 ? '#f59e0b' : '#ef4444'; }
     function dotIcon(r) { return r >= 99 ? '●' : r >= 90 ? '◐' : '○'; }
@@ -105,19 +104,13 @@
     function renderBars(minutes) {
       const now = Math.floor(Date.now() / 1000);
       const map = new Map((minutes || []).map(m => [m.minuteTs, m]));
-      const slots = [];
-      let maxTotal = 1;
+      let h = '<div class="bars">';
       for (let i = 59; i >= 0; i--) {
         const ts = (Math.floor(now / 60) - i) * 60, m = map.get(ts);
         const rate = m ? m.successRate : -1, total = m ? m.total : 0;
-        if (total > maxTotal) maxTotal = total;
-        slots.push({ rate, total });
-      }
-      let h = '<div class="bars">';
-      for (const s of slots) {
-        const bg = s.rate < 0 ? '#86efac' : rateToColor(s.rate);
-        const ht = s.total > 0 ? Math.max(15, (s.total / maxTotal) * 100) : 10;
-        const title = s.rate >= 0 ? `${s.rate.toFixed(0)}% (${s.total} req)` : 'No data';
+        const bg = rate < 0 ? '#4b5563' : rateToColor(rate);
+        const ht = total > 0 ? Math.max(20, Math.min(100, total * 10)) : 30;
+        const title = rate >= 0 ? `${rate.toFixed(0)}% (${total} req)` : 'No data';
         h += `<div class="bar" style="background:${bg};height:${ht}%" title="${title}"></div>`;
       }
       return h + '</div>';
