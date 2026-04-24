@@ -103,10 +103,11 @@
 
     function renderBars(minutes, slotCount) {
       const n = slotCount || 60;
-      const w = n > 60 ? 3 : 4;
+      const w = n > 60 ? 2 : 4;
+      const g = n > 60 ? 1 : 1.5;
       const now = Math.floor(Date.now() / 1000);
       const map = new Map((minutes || []).map(m => [m.minuteTs, m]));
-      let h = `<div class="bars" style="gap:${n > 60 ? '1px' : '1.5px'}">`;
+      let h = `<div class="bars" style="gap:${g}px">`;
       for (let i = n - 1; i >= 0; i--) {
         const ts = (Math.floor(now / 60) - i) * 60, m = map.get(ts);
         const rate = m ? m.successRate : -1, total = m ? m.total : 0;
@@ -156,7 +157,7 @@
         html += `<div class="card center"><p class="sub">No data yet</p></div>`;
       } else {
         if (gN.length) {
-          html += `<div class="card"><div class="section-header">
+          html += `<div class="card" style="max-width:540px;margin:0 auto 16px"><div class="section-header">
             <span class="section-title">Groups</span><span class="section-hint">Last 120 min</span>
           </div>`;
           for (const n of gN) html += renderBar(n, groups[n], 120);
