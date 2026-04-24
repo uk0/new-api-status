@@ -48,9 +48,9 @@
     .bar-count { font-size: 11px; color: #94a3b8; font-variant-numeric: tabular-nums; }
     @media (prefers-color-scheme: dark) { .bar-label-text { color: #e2e8f0; } }
 
-    .bars { display: flex; gap: 2px; height: 20px; align-items: flex-end; }
-    .bar { flex: 1; border-radius: 2px; min-width: 2px; transition: background-color 0.2s; }
-    @media (prefers-color-scheme: dark) { .bar { opacity: 0.8; } }
+    .bars { display: flex; gap: 1.5px; height: 20px; align-items: flex-end; justify-content: center; }
+    .bar { width: 4px; border-radius: 1.5px; flex-shrink: 0; transition: background-color 0.2s; }
+    @media (prefers-color-scheme: dark) { .bar { opacity: 0.85; } }
 
     /* Channel items inside card */
     .ch-item {
