@@ -149,7 +149,7 @@ type logRow struct {
 
 func pollDB(db *sql.DB, driver string) *StatusData {
 	now := time.Now().Unix()
-	since := now - 7200
+	since := now - 5400
 
 	placeholder := "$1"
 	channelJoin := `LEFT JOIN channels c ON l.channel_id = c.id`
@@ -225,7 +225,7 @@ func pollDB(db *sql.DB, driver string) *StatusData {
 		UpdatedAt: now,
 	}
 
-	groupCutoff := ((now / 60) - 119) * 60
+	groupCutoff := ((now / 60) - 89) * 60
 	channelCutoff := ((now / 60) - 59) * 60
 
 	for mk, c := range buckets {
