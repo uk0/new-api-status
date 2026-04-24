@@ -101,22 +101,24 @@
     function dotColor(r) { return r >= 99 ? '#22c55e' : r >= 90 ? '#f59e0b' : '#ef4444'; }
     function dotIcon(r) { return r >= 99 ? '●' : r >= 90 ? '◐' : '○'; }
 
-    function renderBars(minutes) {
+    function renderBars(minutes, slotCount) {
+      const n = slotCount || 60;
+      const w = n > 60 ? 3 : 4;
       const now = Math.floor(Date.now() / 1000);
       const map = new Map((minutes || []).map(m => [m.minuteTs, m]));
-      let h = '<div class="bars">';
-      for (let i = 59; i >= 0; i--) {
+      let h = `<div class="bars" style="gap:${n > 60 ? '1px' : '1.5px'}">`;
+      for (let i = n - 1; i >= 0; i--) {
         const ts = (Math.floor(now / 60) - i) * 60, m = map.get(ts);
         const rate = m ? m.successRate : -1, total = m ? m.total : 0;
         const bg = rate < 0 ? '#22c55e' : rateToColor(rate);
         const ht = total > 0 ? Math.max(20, Math.min(100, total * 10)) : 30;
         const title = rate >= 0 ? `${rate.toFixed(0)}% (${total} req)` : 'No data';
-        h += `<div class="bar" style="background:${bg};height:${ht}%" title="${title}"></div>`;
+        h += `<div class="bar" style="background:${bg};height:${ht}%;width:${w}px" title="${title}"></div>`;
       }
       return h + '</div>';
     }
 
-    function renderBar(label, data) {
+    function renderBar(label, data, slotCount) {
       const r = data.overallRate, c = dotColor(r), icon = dotIcon(r);
       return `<div class="status-item">
         <div class="bar-row">
@@ -127,7 +129,7 @@
           </div>
           <span class="bar-count">${data.totalSuccess}/${data.totalRequests}</span>
         </div>
-        ${renderBars(data.minutes)}
+        ${renderBars(data.minutes, slotCount)}
       </div>`;
     }
 
@@ -155,9 +157,9 @@
       } else {
         if (gN.length) {
           html += `<div class="card"><div class="section-header">
-            <span class="section-title">Groups</span><span class="section-hint">Last 60 min</span>
+            <span class="section-title">Groups</span><span class="section-hint">Last 120 min</span>
           </div>`;
-          for (const n of gN) html += renderBar(n, groups[n]);
+          for (const n of gN) html += renderBar(n, groups[n], 120);
           html += `</div>`;
         }
         if (cN.length) {

@@ -149,7 +149,7 @@ type logRow struct {
 
 func pollDB(db *sql.DB, driver string) *StatusData {
 	now := time.Now().Unix()
-	since := now - 3600
+	since := now - 7200
 
 	placeholder := "$1"
 	channelJoin := `LEFT JOIN channels c ON l.channel_id = c.id`
@@ -225,12 +225,10 @@ func pollDB(db *sql.DB, driver string) *StatusData {
 		UpdatedAt: now,
 	}
 
-	cutoff := ((now / 60) - 59) * 60
+	groupCutoff := ((now / 60) - 119) * 60
+	channelCutoff := ((now / 60) - 59) * 60
 
 	for mk, c := range buckets {
-		if mk.ts < cutoff {
-			continue
-		}
 		rate := float64(0)
 		if c.total > 0 {
 			rate = float64(c.success) / float64(c.total) * 100
@@ -239,6 +237,9 @@ func pollDB(db *sql.DB, driver string) *StatusData {
 
 		p := mk.prefix
 		if strings.HasPrefix(p, "g:") {
+			if mk.ts < groupCutoff {
+				continue
+			}
 			name := p[2:]
 			a := data.Groups[name]
 			if a == nil {
@@ -249,6 +250,9 @@ func pollDB(db *sql.DB, driver string) *StatusData {
 			a.TotalRequests += c.total
 			a.TotalSuccess += c.success
 		} else if strings.HasPrefix(p, "c:") {
+			if mk.ts < channelCutoff {
+				continue
+			}
 			rest := p[2:]
 			parts := strings.SplitN(rest, "|", 2)
 			chName := parts[0]
